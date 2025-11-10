@@ -1,34 +1,52 @@
-//TODO add imports if needed
-//import { exMain } from "./exclude/exampleAss2.js"
-//TODO add/change doc as needed
+import { binaryToDecimal, decimalToBinary, charToDigit } from './src/numberSystemConvert.js';
 /**
- * TODO - Write functional code for this application. You can call any other function, but usage of ".toString(numberSystem)" and "Number.parseInt(number, numberSystem)" is forbidden (only permitted when used on individual digits).
- * The main function which calls the application. 
- * TODO - Please, add specific description here for the application purpose.
+ * The main function which calls the application.
+ * This application can convert any number from binary to decimal system or from decimal to binary system.
  * @param {string} inputNumber number that is being converted
  * @param {number} inputNumberSystem numerical system that the inputNumber is being converted from
  * @param {number} outputNumberSystem numerical system that the inputNumber is being converted into
  * @returns {string} containing number converted to output system
  */
 export function main(inputNumber, inputNumberSystem, outputNumberSystem) {
-  //TODO code
-  //let dtoOut = exMain(inputNumber, inputNumberSystem, outputNumberSystem);
-  return dtoOut;
+	let decimalValue;
+
+	// input convert system (binary to decimal or decimal to binary)
+	if (inputNumberSystem === 2) {
+		decimalValue = binaryToDecimal(inputNumber);
+	} else if (inputNumberSystem === 10) {
+		decimalValue = 0;
+		for (let i = 0; i < inputNumber.length; i++) {
+			const digit = charToDigit(inputNumber[i]);
+			decimalValue = decimalValue * 10 + digit;
+		}
+	} else {
+		throw new Error(`Input number system not supported: ${inputNumberSystem}`);
+	}
+
+	// output of convert system
+	let dtoOut;
+	if (outputNumberSystem === 10) {
+		dtoOut = String(decimalValue);
+	} else if (outputNumberSystem === 2) {
+		dtoOut = decimalToBinary(decimalValue);
+	} else {
+		throw new Error(`Output number system not supported: ${outputNumberSystem}`);
+	}
+
+	return dtoOut;
 }
 
 /**
- * TODO - Change this to contain all input number systems that your application can convert from.
  * Function which returns which number systems are permitted on input.
- * @returns {Array} array of numbers refering to permitted input systems
+ * @returns {Array<number>} permitted input systems
  */
 export function permittedInputSystems() {
 	return [10, 2];
 }
 
 /**
- * TODO - Change this to contain all output number systems that your application can convert to.
  * Function which returns which number systems are permitted on output.
- * @returns {Array} array of numbers refering to permitted output systems
+ * @returns {Array<number>} permitted output systems
  */
 export function permittedOutputSystems() {
 	return [10, 2];
